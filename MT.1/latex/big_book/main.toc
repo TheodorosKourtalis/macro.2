@@ -1,0 +1,39 @@
+\selectlanguage *[]{greek}
+\contentsline {chapter}{\numberline {1}Επισκόπηση Κώδικα για τις Ασκήσεις 1--3}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Φόρτωση Δεδομένων (Άσκηση 1)}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Υπολογισμός Αποπληθωριστή και Φυσικών Λογαρίθμων (Άσκηση 1)}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Ρυθμοί Μεταβολής και Έλεγχος Ταυτότητας (Άσκηση 1)}{6}{section.1.3}%
+\contentsline {chapter}{\numberline {2}Εύρεση Έτους Βάσης (Άσκηση 2)}{7}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Δημιουργία Διαγραμμάτων σε Subplots (Άσκηση 3)}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Συνάρτηση για Σχεδιασμό των Ρυθμών Μεταβολής}{9}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Εισαγωγή στην Άσκηση 4 (Ετήσια Δεδομένα)}{11}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Φόρτωση Βιβλιοθηκών και Λεξικό \texttt {sheet\_info}}{11}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Βοηθητικές Συναρτήσεις}{13}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Μετατροπή σε \texttt {float} \& Συναρτήσεις Πλοκής}{13}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Συνάρτηση για Συνδυαστική Πλοκή Ρυθμού Μεταβολής (Nominal, Chain, Deflator) ανά Χώρα}{14}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}Κύριο Τμήμα Κώδικα (\texttt {main})}{15}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Παράρτημα: Παραγόμενα Διαγράμματα}{17}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Εισαγωγή στην Άσκηση 5}{33}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Φόρτωση \& Καθαρισμός Τριμηνιαίων Δεδομένων}{33}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Υπολογισμός Ρυθμών Μεταβολής}{34}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Διαγράμματα Τριμηνιαίων Ρυθμών Μεταβολής}{35}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Παράρτημα: Επιπλέον Γραφήματα (Άσκηση 5)}{37}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Τελική Δαπάνη Κατανάλωσης: Συνδυασμένη Ανάπτυξη}{37}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Ακαθάριστο Εγχώριο Προϊόν σε Τρέχουσες Τιμές Αγοράς: Συνδυασμένη Ανάπτυξη}{37}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Ακαθάριστος Σχηματισμός Παγίου Κεφαλαίου: Συνδυασμένη Ανάπτυξη}{38}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Εισαγωγή στην Άσκηση 6}{39}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Δομή του Κώδικα}{39}{section.7.1}%
+\contentsline {section}{\numberline {7.2} Κώδικας (exercise\_6.py): Ανάλυση με HP-Filter}{40}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Παράδειγμα Συναρτήσεων – Φόρτωση \& Αποσύνθεση}{40}{subsection.7.2.1}%
+\contentsline {section}{\numberline {7.3}Σχεδίαση Γραφημάτων: Actual vs. Trend και Cycle}{40}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Συνδυαστικά Γραφήματα για Όλες τις Κυκλικές Συνιστώσες}{41}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Υπολογισμός Μεταβλητότητας και Σχετικής Μεταβλητότητας}{41}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Παράρτημα: Πίνακες \& Γραφήματα (Άσκηση 6)}{42}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}Πίνακες Μεταβλητότητας από CSV}{42}{subsection.7.6.1}%
+\contentsline {subsection}{\numberline {7.6.2}Σχετική Μεταβλητότητα: Ευρωζώνη}{42}{subsection.7.6.2}%
+\contentsline {subsection}{\numberline {7.6.3}Σχετική Μεταβλητότητα: Ελλάδα}{42}{subsection.7.6.3}%
+\contentsline {section}{\numberline {7.7}Γραφήματα από την Αποσύνθεση HP-Filter}{42}{section.7.7}%
+\contentsline {subsection}{\numberline {7.7.1}Όλες οι Κυκλικές Συνιστώσες}{42}{subsection.7.7.1}%
+\contentsline {subsection}{\numberline {7.7.2}Ακαθάριστο Εγχώριο Προϊόν (ΑΕΠ)}{43}{subsection.7.7.2}%
+\contentsline {subsection}{\numberline {7.7.3}Επενδύσεις}{44}{subsection.7.7.3}%
+\contentsline {subsection}{\numberline {7.7.4}Ιδιωτική Κατανάλωση}{45}{subsection.7.7.4}%

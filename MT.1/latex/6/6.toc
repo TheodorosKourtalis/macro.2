@@ -1,0 +1,17 @@
+\selectlanguage *[]{greek}
+\contentsline {chapter}{\numberline {1}Εισαγωγή στην Άσκηση 6}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Δομή του Κώδικα}{5}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Κυρίως Κώδικας (exercise\_6.py): Ανάλυση με HP-Filter}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Παράδειγμα Συναρτήσεων – Φόρτωση \& Αποσύνθεση}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Σχεδίαση Γραφημάτων: Actual vs. Trend και Cycle}{8}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Συνδυαστικά Γραφήματα για Όλες τις Κυκλικές Συνιστώσες}{8}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Υπολογισμός Μεταβλητότητας και Σχετικής Μεταβλητότητας}{9}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Παράρτημα: Πίνακες \& Γραφήματα (Άσκηση 6)}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Πίνακες Μεταβλητότητας από CSV}{11}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Σχετική Μεταβλητότητα: Ευρωζώνη}{11}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Σχετική Μεταβλητότητα: Ελλάδα}{11}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Γραφήματα από την Αποσύνθεση HP-Filter}{11}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Όλες οι Κυκλικές Συνιστώσες}{12}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Ακαθάριστο Εγχώριο Προϊόν (ΑΕΠ)}{13}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Επενδύσεις}{14}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Ιδιωτική Κατανάλωση}{15}{subsection.3.2.4}%
