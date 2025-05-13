@@ -1,20 +1,48 @@
-US Inflation Proxy  
-1-mo ahead CPI via error-weighted Prophet ensemble
+US Inflation Proxy
+==================
 
-Run:  
-python expected_inflation_ra.py --start 1990-01-01 --end 2025-04-30 --vintage off --plot on
+A one-month-ahead CPI inflation proxy using an inverse-error–weighted Prophet ensemble.
 
-Outputs:  
-expected_inflation.csv  
-error_stats.csv  
-actual_vs_all_proxies.png  
-actual_vs_Rational Exp (IN).png  
-Rational_Exp(OOS)_vs_mich.png  
-adaptive_vs_Rational_Exp(OOS).png  
-forecast_errors.png
+Run
+---
 
-Reqs: pandas numpy pandas_datareader prophet bayesian-optimization matplotlib seaborn joblib
+python expected_inflation_ra.py 
+–start 1990-01-01 
+–end   2025-04-30 
+–vintage off 
+–plot   on
 
-Data: FRED/ALFRED series (CPIAUCSL, CPILFESL, UNRATE, FEDFUNDS, DCOILWTICO, M2SL, PPIACO, UMCSENT, MICH)
+Outputs
+-------
+- **expected_inflation.csv**   
+  Monthly proxy series + raw model forecasts  
+- **error_stats.csv**  
+  MAPE, RMSE, Bias for four methods  
+- **Plots**  
+  - actual_vs_all_proxies.png  
+  - actual_vs_Rational Exp (IN).png  
+  - Rational_Exp (OOS)_vs_mich.png  
+  - adaptive_vs_Rational_Exp (OOS).png  
+  - forecast_errors.png  
 
-Code: expected_inflation_ra.py v1.2
+Requirements
+------------
+- pandas  
+- numpy  
+- pandas_datareader  
+- prophet  
+- bayesian-optimization  
+- matplotlib  
+- seaborn  
+- joblib  
+
+Data
+----
+All series from FRED/ALFRED:  
+CPIAUCSL, CPILFESL, UNRATE, FEDFUNDS, DCOILWTICO, M2SL, PPIACO, UMCSENT, MICH  
+
+Code
+----
+`expected_inflation_ra.py` v1.2  
+
+Feel free to fork and adapt!
