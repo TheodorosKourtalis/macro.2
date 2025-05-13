@@ -1,28 +1,20 @@
-US Inflation Proxy
+US Inflation Proxy  
+1-mo ahead CPI via error-weighted Prophet ensemble
 
-Inverse-error–weighted Prophet ensemble for one-month-ahead US CPI inflation.
+Run:  
+python expected_inflation_ra.py --start 1990-01-01 --end 2025-04-30 --vintage off --plot on
 
-Run
+Outputs:  
+expected_inflation.csv  
+error_stats.csv  
+actual_vs_all_proxies.png  
+actual_vs_Rational Exp (IN).png  
+Rational_Exp(OOS)_vs_mich.png  
+adaptive_vs_Rational_Exp(OOS).png  
+forecast_errors.png
 
-python expected_inflation_ra.py \
-  --start 1990-01-01 \
-  --end   2025-04-30 \
-  --vintage off \
-  --plot   on
+Reqs: pandas numpy pandas_datareader prophet bayesian-optimization matplotlib seaborn joblib
 
-Outputs
-	•	expected_inflation.csv
-	•	error_stats.csv
-	•	actual_vs_all_proxies.png
-	•	actual_vs_Rational Exp (IN).png
-	•	Rational_Exp(OOS)_vs_mich.png
-	•	adaptive_vs_Rational_Exp(OOS).png
-	•	forecast_errors.png
+Data: FRED/ALFRED series (CPIAUCSL, CPILFESL, UNRATE, FEDFUNDS, DCOILWTICO, M2SL, PPIACO, UMCSENT, MICH)
 
-Requirements
-
-pandas numpy pandas_datareader prophet bayesian-optimization matplotlib seaborn joblib
-
-Data
-
-All series from FRED/ALFRED. Code in expected_inflation_ra.py (v1.2).
+Code: expected_inflation_ra.py v1.2
