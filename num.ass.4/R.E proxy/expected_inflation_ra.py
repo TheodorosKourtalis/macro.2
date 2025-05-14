@@ -23,6 +23,8 @@ sns.set_theme(style="whitegrid")
 from matplotlib.lines import Line2D
 CB_PAL = sns.color_palette("tab10", 4)
 
+from pandas.tseries.offsets import DateOffset
+
 warnings.filterwarnings("ignore", category=FutureWarning)
 plt.rcParams["figure.dpi"] = 120
 # plt.style.use('ggplot')
@@ -35,8 +37,12 @@ plt.rcParams.update({
     "ytick.labelsize": 12
 })
 
+#
 # Configuration
-CSV_PATH = "/Users/thodoreskourtales/macro.num_ass_4/expected_inflation.csv"
+# Directory for all outputs to avoid overwriting previous runs
+OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "ra_outputs")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+CSV_PATH = os.path.join(OUTPUT_DIR, "expected_inflation_ra.csv")
 SERIES = {"cpi": "CPIAUCSL", "core_cpi": "CPILFESL", "unemp_rate": "UNRATE", "fed_funds": "FEDFUNDS", "oil_price": "DCOILWTICO", "m2": "M2SL", "ppi": "PPIACO", "sentiment": "UMCSENT", "mich_exp": "MICH"}
 REGRESSORS = [k for k in SERIES if k != "cpi"]
 CONFINT = 0.8
@@ -44,8 +50,12 @@ CV_YEARS = 10
 MAX_MODELS = 4
 BO_INIT_POINTS = 5
 BO_N_ITER = 20
+CACHE_DIR = os.path.join(os.path.dirname(__file__), "_model_cache_ra")
+os.makedirs(CACHE_DIR, exist_ok=True)
 ROLL_ERR_WIN = 36
-CACHE_DIR = os.path.join(os.path.dirname(__file__), "_model_cache")
+# Forecast and adaptive horizon in months
+HORIZON_MONTHS = 12
+CACHE_DIR = os.path.join(os.path.dirname(__file__), "_model_cache_ra")
 os.makedirs(CACHE_DIR, exist_ok=True)
 MICHIGAN_MAIZE = "#FFCB05"
 
@@ -110,9 +120,10 @@ def bayes_search(train: pd.DataFrame) -> list[tuple[float, float]]:
 # Random-walk forecast
 
 def fc_regressors_random_walk(hist: pd.DataFrame) -> pd.DataFrame:
-    next_ds = hist["ds"].max() + pd.offsets.MonthBegin()
+    # now forecast exactly HORIZON_MONTHS months ahead
+    forecast_horizon = hist["ds"].max() + DateOffset(months=HORIZON_MONTHS)
     vals = hist.iloc[-1][REGRESSORS]
-    return pd.DataFrame({"ds":[next_ds], **vals.to_dict()})
+    return pd.DataFrame({"ds": [forecast_horizon], **vals.to_dict()})
 
 # Metrics
 
@@ -139,7 +150,12 @@ def walk_forward(df: pd.DataFrame, params_pool: list[tuple[float,float]]) -> pd.
             yhat = m.predict(future)["yhat"].iloc[0]
             err = (hist["y"] - m.predict(hist)["yhat"]).abs()
             preds.append(yhat); weights.append(1/err.tail(ROLL_ERR_WIN).mean())
-        recs.append({"ds":future["ds"].iloc[0],"exp_mean":np.average(preds,weights=weights),**{f"model_{i+1}":p for i,p in enumerate(preds)}})
+        # record forecast back at the "as-of" cut date
+        recs.append({
+            "ds": cut,
+            "exp_mean": np.average(preds, weights=weights),
+            **{f"model_{i+1}": p for i, p in enumerate(preds)}
+        })
     return pd.DataFrame(recs).set_index("ds")
 
 # CLI / main
@@ -184,7 +200,18 @@ def main():
             oos.to_csv(fh)
         print(f"▸ Saved {CSV_PATH}")
 
-    merged = oos.join(df.set_index("ds")["y"], how="left").dropna()
+    # align sample: drop last 12 months where no OOS forecast is available
+    last_fc_date = oos.index.max()
+    df = df[df["ds"] <= last_fc_date]
+
+    # merge actual, forecast, and survey on the same as-of date
+    mich_series = df.set_index("ds")["mich_exp"]
+    merged = (
+        oos
+        .join(df.set_index("ds")["y"], how="left")
+        .join(mich_series, how="left")
+        .dropna()
+    )
     m_oos = compute_metrics(merged["y"], merged["exp_mean"])
     print(f"▸ OOS metrics — MAPE: {m_oos['MAPE']:.2f}%, RMSE: {m_oos['RMSE']:.3f}")
 
@@ -213,7 +240,7 @@ def main():
         in_df['exp_mean'] = np.average(in_df[models], axis=1, weights=weights)
     m_in = compute_metrics(df['y'], in_df['exp_mean'])
     print(f"▸ In-sample metrics — MAPE: {m_in['MAPE']:.2f}%, RMSE: {m_in['RMSE']:.3f}")
-    adap_series = df.set_index("ds")["y"].shift(1)
+    adap_series = df.set_index("ds")["y"].shift(HORIZON_MONTHS)
     
     mich_series = df.set_index("ds")["mich_exp"]
 
@@ -255,7 +282,7 @@ def main():
     fig.subplots_adjust(bottom=0.45)
     fig.text(0.5, 0.01, sources_text, ha='center', va='top', fontsize=10, wrap=True)
     fig.tight_layout()
-    fig.savefig(os.path.abspath("actual_vs_all_proxies.png"), bbox_inches='tight', pad_inches=0.1)
+    fig.savefig(os.path.join(OUTPUT_DIR, "actual_vs_all_proxies.png"), bbox_inches='tight', pad_inches=0.1)
     print("▸ Saved actual_vs_all_proxies.png")
 
     # In-sample plot
@@ -272,7 +299,7 @@ def main():
     fig2.subplots_adjust(bottom=0.45)
     fig2.text(0.5, 0.01, sources_text, ha='center', va='top', fontsize=10, wrap=True)
     fig2.tight_layout()
-    fig2.savefig(os.path.abspath("actual_vs_Rational Exp (IN).png"), bbox_inches='tight', pad_inches=0.1)
+    fig2.savefig(os.path.join(OUTPUT_DIR, "actual_vs_Rational Exp (IN).png"), bbox_inches='tight', pad_inches=0.1)
     print("▸ Saved actual_vs_Rational_Exp(IN).png")
 
     # ------------------------------------------------------------------ Combined Forecast & Michigan Plot
@@ -296,7 +323,7 @@ def main():
     fig3.subplots_adjust(bottom=0.50)
     fig3.text(0.5, 0.01, sources_text, ha='center', va='top', fontsize=10, wrap=True)
     fig3.tight_layout()
-    fig3.savefig(os.path.abspath('Rational_Exp(OOS)_vs_mich.png'), bbox_inches='tight', pad_inches=0.1)
+    fig3.savefig(os.path.join(OUTPUT_DIR, 'Rational_Exp(OOS)_vs_mich.png'), bbox_inches='tight', pad_inches=0.1)
     print('▸ Saved Rational_Exp(OOS)_vs_mich.png')
 
     # ------------------------------------------------------------------ Adaptive vs Forecast Plot
@@ -318,7 +345,7 @@ def main():
     fig4.subplots_adjust(bottom=0.50)
     fig4.text(0.5, 0.01, sources_text, ha='center', va='top', fontsize=10, wrap=True)
     fig4.tight_layout()
-    fig4.savefig(os.path.abspath('adaptive_vs_Rational_Exp(OOS).png'), bbox_inches='tight', pad_inches=0.1)
+    fig4.savefig(os.path.join(OUTPUT_DIR, 'adaptive_vs_Rational_Exp(OOS).png'), bbox_inches='tight', pad_inches=0.1)
     print('▸ Saved adaptive_vs_Rational_Exp(OOS).png')
 
 
@@ -344,7 +371,7 @@ def main():
     ]
 
     # Save to CSV
-    stats_csv = os.path.abspath('error_stats.csv')
+    stats_csv = os.path.join(OUTPUT_DIR, 'error_stats_ra.csv')
     stats_df.to_csv(stats_csv)
     print(f"▸ Saved error statistics to {stats_csv}")
 
@@ -373,7 +400,7 @@ def main():
     fig5.tight_layout()
     fig5.subplots_adjust(bottom=0.05)
     fig5.text(0.5, 0.0001, sources_text, ha='center', va='top', fontsize=10, wrap=True)
-    fig5.savefig(os.path.abspath('forecast_errors.png'), bbox_inches='tight', pad_inches=0.1)
+    fig5.savefig(os.path.join(OUTPUT_DIR, 'forecast_errors.png'), bbox_inches='tight', pad_inches=0.1)
     print('▸ Saved forecast_errors.png')
 
 if __name__ == "__main__":
